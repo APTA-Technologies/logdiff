@@ -1,0 +1,16 @@
+# action.yml
+name: 'apta logdiff'
+description: 'Calcuate differences in log files from software executions'
+inputs:
+  logfile:
+    description: 'current execution traces'
+    required: true
+    default: 'inputfile.csv'
+outputs:
+  resultfile:
+    description: 'overview of differences found'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.logfile }}
