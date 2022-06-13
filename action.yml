@@ -2,7 +2,7 @@
 name: 'apta logdiff'
 description: 'Calcuate differences in log files from software executions'
 inputs:
-  logfile:
+  who-to-greet:
     description: 'current execution traces'
     required: true
     default: 'inputfile.csv'
@@ -13,4 +13,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.logfile }}
+    - ${{ inputs.who-to-greet }}
