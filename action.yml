@@ -2,7 +2,11 @@
 name: 'apta logdiff'
 description: 'Calcuate differences in log files from software executions'
 inputs:
-  who-to-greet:
+  tracefile:
+    description: 'current execution traces'
+    required: true
+    default: 'inputfile.csv'
+  inifile:
     description: 'current execution traces'
     required: true
     default: 'inputfile.csv'
@@ -13,4 +17,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.tracefile }}
+    - --ini=/home/flexfringe/ini/${{ inputs.inifile }}
