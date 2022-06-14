@@ -35,4 +35,5 @@ echo "---------------------------------------------------------"
 echo "Publishing logdiff results... (TODO)"
 RESULT_PATH="$PREVIOUS_MODEL_PATH.result"
 cat "$RESULT_PATH"
-
+cp "$RESULT_PATH" ./logdiff_result.csv
+echo "::set-output name=resultfile::logdiff_result.csv"
