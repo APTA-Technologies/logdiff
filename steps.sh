@@ -6,12 +6,13 @@ PREVIOUS_MODEL_PATH="/home/flexfringe/previous.json"
 # Happens outside this action
 
 # (2)  download previous model (action)
-wget https://logdiff.herokuapp.com/api/latest -O $PREVIOUS_MODEL_PATH
+wget "https://logdiff.herokuapp.com/api/latest" -O $PREVIOUS_MODEL_PATH
 
 # (3) run flexfringe logdiff on logs and downloaded model (action)
 echo "Previous model:"
 cat $PREVIOUS_MODEL_PATH | jq
 echo "RUNNING LOGDIFF (TODO)"
+/home/flexfringe/flexfringe "$2" --mode=predict --predictalign=1 "$1" --aptafile="$PREVIOUS_MODEL_PATH"
 
 echo "---------------------------------------------------------"
 
@@ -32,4 +33,6 @@ echo "---------------------------------------------------------"
 
 # (6) publish logdiff results (action) 
 echo "Publishing logdiff results... (TODO)"
+RESULT_PATH="$PREVIOUS_MODEL_PATH.result"
+cat "$RESULT_PATH"
 
