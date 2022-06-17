@@ -7,9 +7,20 @@ inputs:
     required: true
     default: 'inputfile.csv'
   inifile:
-    description: 'current execution traces'
+    description: 'config file'
     required: true
-    default: 'inputfile.csv'
+    default: 'ini/edsm.ini'
+  apitoken:
+    description: 'The api token to use'
+    required: true
+  gitref:
+    description: 'The git ref to store for this run'
+    required: true
+    default: ${{ github.ref }}
+  reponame:
+    description: 'The name of the repository we are running logdiff for'
+    required: true
+    default: ${{ github.repository }}
 outputs:
   resultfile:
     description: 'overview of differences found'
@@ -17,5 +28,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - ${{ inputs.apitoken }}
+    - ${{ inputs.gitref }}
+    - ${{ inputs.reponame }}
     - ${{ inputs.tracefile }}
     - --ini=/home/flexfringe/ini/${{ inputs.inifile }}

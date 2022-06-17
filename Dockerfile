@@ -2,7 +2,7 @@ FROM ghcr.io/tudelft-cda-lab/flexfringe:main
 
 USER root
 RUN set -ex && \
-    apk add --no-cache jq
+    apk add --no-cache jq curl
 
 # TODO
 
