@@ -61,6 +61,7 @@ echo "---------------------------------------------------------"
 # (6) publish logdiff results (action) 
 echo "Publishing logdiff results..."
 RESULT_PATH="$PREVIOUS_MODEL_PATH.result"
+RESULT_SERVER_RESPONSE_PATH="./logdiff_response.csv"
 
 JSON_RESULT=$( jq -n \
     --arg repo_name "$REPO_NAME" \
@@ -72,6 +73,7 @@ curl -X POST \
     --header 'Content-Type: application/json' \
     --header "access_token: $API_TOKEN" \
     --data "$JSON_RESULT" \
+    -o "$RESULT_SERVER_RESPONSE_PATH" \
     https://logdiff.herokuapp.com/api/result
 
 cp "$RESULT_PATH" ./logdiff_result.csv
