@@ -8,19 +8,28 @@ REPO_NAME="$3"
 # Shift remaining arguments down, e.g. with shift 1, $2 becomes $1
 shift 3
 
+# Default headers to write in case this is the first run (then we cannot diff the logs)
+DEFAULT_HEADERS="row nr; abbadingo trace; state sequence; score sequence; sum scores; mean scores; min score"
+
 PREVIOUS_MODEL_PATH="/home/flexfringe/previous.json"
 
 # (1) make test -> logfiles (test repo)
 # Happens outside this action
 
 # (2)  download previous model (action)
-curl https://logdiff.herokuapp.com/api/model/latest -o $PREVIOUS_MODEL_PATH --header "access_token: $API_TOKEN"
+GET_PREV_MODEL_STATUSCODE=$(curl -w "%{http_code}" -s -o "$PREVIOUS_MODEL_PATH" --header "access_token: $API_TOKEN" https://logdiff.herokuapp.com/api/model/latest)
 
 # (3) run flexfringe logdiff on logs and downloaded model (action)
-echo "Previous model:"
-cat $PREVIOUS_MODEL_PATH | jq
-echo "RUNNING LOGDIFF (TODO)"
-/home/flexfringe/flexfringe "$2" --mode=predict --predictalign=1 "$1" --aptafile="$PREVIOUS_MODEL_PATH"
+if [ $GET_PREV_MODEL_STATUSCODE = "200" ]
+then
+    echo "Previous model:"
+    cat $PREVIOUS_MODEL_PATH | jq
+    echo "Running logdiff..."
+    /home/flexfringe/flexfringe "$2" --mode=predict --predictalign=1 "$1" --aptafile="$PREVIOUS_MODEL_PATH"
+else
+    echo "Could not retrieve previous model, no diff possible. (status: $GET_PREV_MODEL_STATUSCODE)"
+    echo $DEFAULT_HEADERS > "$PREVIOUS_MODEL_PATH.result"
+fi
 
 echo "---------------------------------------------------------"
 
@@ -50,7 +59,7 @@ curl -X POST \
 echo "---------------------------------------------------------"
 
 # (6) publish logdiff results (action) 
-echo "Publishing logdiff results... (TODO)"
+echo "Publishing logdiff results..."
 RESULT_PATH="$PREVIOUS_MODEL_PATH.result"
 
 JSON_RESULT=$( jq -n \
