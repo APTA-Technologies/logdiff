@@ -14,7 +14,7 @@ shift 4
 
 # Default headers to write in case this is the first run (then we cannot diff the logs)
 DEFAULT_HEADERS="row nr; abbadingo trace; state sequence; score sequence; sum scores; mean scores; min score"
-
+FLEXFRINGE_BASE_PATH="/home/flexfringe"
 PREVIOUS_MODEL_PATH="/home/flexfringe/previous.json"
 
 # (1) make test -> logfiles (test repo)
@@ -47,17 +47,22 @@ OUTPUT_PATH="$1.ff.final.json"
 echo "Output path: $OUTPUT_PATH"
 
 # Generate json to submit
-JSON_OUTPUT=$( jq -n \
+JSON_OUT_PATH="$FLEXFRINGE_BASE_PATH/json_output.json"
+jq -n \
     --arg repo_name "$REPO_NAME" \
     --arg git_ref "$GIT_REF" \
     --slurpfile data "$OUTPUT_PATH" \
-    '{repo_name: $repo_name, git_ref: $git_ref, data: $data}')
+    '{repo_name: $repo_name, git_ref: $git_ref, data: $data[0]}' \
+    > $JSON_OUT_PATH
+
+echo JSON OUT PATH THINGY
+cat $JSON_OUT_PATH | jq
 
 # Post new model data
 curl -X POST \
     --header 'Content-Type: application/json' \
     --header "access_token: $API_TOKEN" \
-    --data "$JSON_OUTPUT" \
+    --data "@$JSON_OUT_PATH" \
     https://logdiff.herokuapp.com/api/model
 
 echo "---------------------------------------------------------"
@@ -67,16 +72,18 @@ echo "Publishing logdiff results..."
 RESULT_PATH="$PREVIOUS_MODEL_PATH.result"
 RESULT_SERVER_RESPONSE_PATH="./logdiff_response.csv"
 
-JSON_RESULT=$( jq -n \
+JSON_RESULT_PATH="$FLEXFRINGE_BASE_PATH/json_result.json"
+jq -n \
     --arg repo_name "$REPO_NAME" \
     --arg git_ref "$GIT_REF" \
     --rawfile data "$RESULT_PATH" \
-    '{repo_name: $repo_name, git_ref: $git_ref, data: $data}')
+    '{repo_name: $repo_name, git_ref: $git_ref, data: $data}' \
+    > $JSON_RESULT_PATH
     
 curl -X POST \
     --header 'Content-Type: application/json' \
     --header "access_token: $API_TOKEN" \
-    --data "$JSON_RESULT" \
+    --data "@$JSON_RESULT_PATH" \
     -o "$RESULT_SERVER_RESPONSE_PATH" \
     https://logdiff.herokuapp.com/api/result
 
