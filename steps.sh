@@ -50,7 +50,7 @@ echo "Output path: $OUTPUT_PATH"
 JSON_OUTPUT=$( jq -n \
     --arg repo_name "$REPO_NAME" \
     --arg git_ref "$GIT_REF" \
-    --argjson data "$(cat $OUTPUT_PATH)" \
+    --slurpfile data "$OUTPUT_PATH" \
     '{repo_name: $repo_name, git_ref: $git_ref, data: $data}')
 
 # Post new model data
@@ -70,7 +70,7 @@ RESULT_SERVER_RESPONSE_PATH="./logdiff_response.csv"
 JSON_RESULT=$( jq -n \
     --arg repo_name "$REPO_NAME" \
     --arg git_ref "$GIT_REF" \
-    --arg data "$(cat $RESULT_PATH)" \
+    --rawfile data "$RESULT_PATH" \
     '{repo_name: $repo_name, git_ref: $git_ref, data: $data}')
     
 curl -X POST \
