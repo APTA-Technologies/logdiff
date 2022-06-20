@@ -1,12 +1,16 @@
 #!/bin/sh
 
+# Exit on error
+set -e
+
 # Grab arguments that we don't want to pass to logdiff
 API_TOKEN="$1"
 GIT_REF="$2"
 REPO_NAME="$3"
+SEPARATOR="$4"
 
 # Shift remaining arguments down, e.g. with shift 1, $2 becomes $1
-shift 3
+shift 4
 
 # Default headers to write in case this is the first run (then we cannot diff the logs)
 DEFAULT_HEADERS="row nr; abbadingo trace; state sequence; score sequence; sum scores; mean scores; min score"

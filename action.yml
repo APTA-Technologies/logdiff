@@ -21,6 +21,10 @@ inputs:
     description: 'The name of the repository we are running logdiff for'
     required: true
     default: ${{ github.repository }}
+  separator:
+    description: 'The separator used to parse the input csv file'
+    required: true
+    default: ','
 outputs:
   resultfile:
     description: 'overview of differences found'
@@ -31,5 +35,6 @@ runs:
     - ${{ inputs.apitoken }}
     - ${{ inputs.gitref }}
     - ${{ inputs.reponame }}
+    - ${{ inputs.separator }}
     - ${{ inputs.tracefile }}
     - --ini=/home/flexfringe/ini/${{ inputs.inifile }}
