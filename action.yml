@@ -9,7 +9,7 @@ inputs:
   inifile:
     description: 'config file'
     required: true
-    default: 'ini/edsm.ini'
+    default: 'edsm.ini'
   apitoken:
     description: 'The api token to use'
     required: true
