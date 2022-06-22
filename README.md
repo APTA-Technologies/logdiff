@@ -45,7 +45,7 @@ The action publishes a couple of files as artifact. It includes a `inputname.csv
 ```
 Summary of logdiff run
 
-Traces with unchanged behavior: 	102
+Traces with unchanged behavior:	102
 Traces with changed behavior:	5
 
 Different behavior for trace ids (numeric, identifier):
