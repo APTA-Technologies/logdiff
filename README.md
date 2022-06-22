@@ -45,10 +45,10 @@ The action publishes a couple of files as artifact. It includes a `inputname.csv
 ```
 Summary of logdiff run
 
-Number of correct traces: 	102
-Number of differenct traces:	5
+Traces with unchanged behavior: 	102
+Traces with changed behavior:	5
 
-Different behaviors for trace ids (numeric, identifier):
+Different behavior for trace ids (numeric, identifier):
 {(3, 73a343b0), (57, ea75d912), (71, 00113763), (79, 23091ac0), (101, 3298111a)}
 
 Average number of different events per trace: 1.6
@@ -60,9 +60,9 @@ Events most commonly involved in difference: EV_ACTIVATE, EV_SUCCESS
 Details of differences are stord in ev_traces.csv.result.
 
 ==========
-Correct 	 97 / 102
-Different	  5 / 102
-Total		102 / 102
+Unchanged   97 / 102
+Changed	    5 / 102
+Total       102 / 102
 ==========
 
 ```
