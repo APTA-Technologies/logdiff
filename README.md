@@ -1,4 +1,4 @@
-# log differencing
+# Log Differencing Action
 
 Logdiff takes the log output of your recent commit/push and highlights differences to the previous commit/push.
 Rather than comparing the log files as text document, it builds a reference software model from the log files as a baseline for each comparsion.
@@ -37,6 +37,35 @@ The `logdiff action` requires write permissions in the folder with the `tracefil
 - a model as json file
 - a trace-by-trace result file as csv
 - a human-readable/interpreted result file as csv
+
+## Interpreting the Output
+
+The action publishes a couple of files as artifact. It includes a `inputname.csv.result`, which contains line-by-line information about each input trace.
+
+```
+Summary of logdiff run
+
+Number of aligned traces: 102
+Number of misaligned traces: 5
+
+Misaligned trace ids (numeric, identifier):
+{(3, 73a343b0), (57, ea75d912), (71, 00113763), (79, 23091ac0), (101, 3298111a)}
+
+Average number of misalignments per trace: 1.6
+
+Average depth of misalignment: 8 events
+
+Most commonly misaligned events: EV_ACTIVATE, EV_SUCCESS
+
+Details of misaligned traces are stord in ev_traces.csv.result.
+
+==========
+Aligned 	 97 / 102
+Misaligned	  5 / 102
+Total		102 / 102
+==========
+
+```
 
 ## Contact
 
