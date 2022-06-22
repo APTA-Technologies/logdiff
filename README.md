@@ -45,23 +45,23 @@ The action publishes a couple of files as artifact. It includes a `inputname.csv
 ```
 Summary of logdiff run
 
-Number of aligned traces: 102
-Number of misaligned traces: 5
+Number of correct traces: 	102
+Number of differenct traces:	5
 
-Misaligned trace ids (numeric, identifier):
+Different behaviors for trace ids (numeric, identifier):
 {(3, 73a343b0), (57, ea75d912), (71, 00113763), (79, 23091ac0), (101, 3298111a)}
 
-Average number of misalignments per trace: 1.6
+Average number of different events per trace: 1.6
 
-Average depth of misalignment: 8 events
+Average depth of differences: 8 events
 
-Most commonly misaligned events: EV_ACTIVATE, EV_SUCCESS
+Events most commonly involved in difference: EV_ACTIVATE, EV_SUCCESS
 
-Details of misaligned traces are stord in ev_traces.csv.result.
+Details of differences are stord in ev_traces.csv.result.
 
 ==========
-Aligned 	 97 / 102
-Misaligned	  5 / 102
+Correct 	 97 / 102
+Different	  5 / 102
 Total		102 / 102
 ==========
 
